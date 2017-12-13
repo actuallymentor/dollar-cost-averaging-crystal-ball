@@ -11,7 +11,7 @@ const verbose = true
 
 // Chunk
 let chunk = { 
-	norec: compound( principal, 0, horizon, marketreturn, { year: -1 } , verbose ).
+	norec: compound( principal, 0, horizon, marketreturn, { year: -1 } , verbose ),
 	rec: compound( principal, 0, horizon, marketreturn, { year: crashyear, down: crashintensity } , verbose )
  }
 
