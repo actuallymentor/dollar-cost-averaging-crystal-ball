@@ -25,4 +25,4 @@ let norecroi = Math.floor( ( 100 * ( chunk.norec.result - averaged.norec.result 
 let recroi = Math.floor( ( 100 * ( chunk.norec.result - averaged.norec.result ) ) / chunk.norec.result )
 
 console.log( `Without a recession chunk investing is ${norecroi}% more profitable.` )
-console.log( `With a recession chunk investing is ${Math.floor(recroi}% more profitable.` )
+console.log( `With a recession chunk investing is ${Math.floor(recroi)}% more profitable.` )
