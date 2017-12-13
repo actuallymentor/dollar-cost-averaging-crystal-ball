@@ -1,4 +1,4 @@
-const calculate = ( principal, yearlyadd, duration, interest, recession = { year: -1, down: 0 }, debug = false ) => { 
+module.exports = ( principal, yearlyadd, duration, interest, recession = { year: -1, down: 0 }, debug = false ) => { 
 
 	// Validations
 	if ( recession.year > duration ) console.log( `WARN: You specified a recession beyond your investment horizon` )
@@ -12,9 +12,9 @@ const calculate = ( principal, yearlyadd, duration, interest, recession = { year
 
 
 	// Do the compound calculation
-	for (let year = 0; year < duration; year++) {
+	for (let year = 1; year < duration+1; year++) {
 		portfolio += yearlyadd
-		year == recession.year ? portfolio *= crash : portfolio *= roi
+		year == recession.year ? ( portfolio *= crash ) : ( portfolio *= roi )
 	}
 
 	//  Round the portfolio off to the closest integer
@@ -27,13 +27,14 @@ const calculate = ( principal, yearlyadd, duration, interest, recession = { year
 		duration: duration,
 		interest: interest,
 		roi: roi,
+		recession: recession,
 		outcome: portfolio
 	}
+	if ( debug && recession.year != -1 ) console.log( `CRASH | ${ yearlyadd ? 'DCA' : 'CHUNK' }` )
+	if ( debug && recession.year == -1 ) console.log( `SAFE |  ${ yearlyadd ? 'DCA' : 'CHUNK' }` )
 	if ( debug ) console.log(  debuggery )
 
 	// Return the the stats
 	return { result: portfolio, debug: debuggery }
 
 }
-
- module.exports = calculate
