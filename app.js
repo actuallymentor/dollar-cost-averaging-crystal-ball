@@ -9,21 +9,20 @@ const principal = 100000
 const dca = principal/horizon
 const verbose = true
 
-// Example compound
-let chunk = compound( principal, 0, horizon, marketreturn, { year: -1 } , verbose )
+// Chunk
+let chunk = { 
+	norec: compound( principal, 0, horizon, marketreturn, { year: -1 } , verbose ).
+	rec: compound( principal, 0, horizon, marketreturn, { year: crashyear, down: crashintensity } , verbose )
+ }
 
-// Recession
-let chunkrecession = compound( principal, 0, horizon, marketreturn, { year: crashyear, down: crashintensity } , verbose )
+// Dollar cost averaged
+let averaged = { 
+	norec: compound( 0, dca, horizon, marketreturn, { year: -1 } ,verbose ),
+	rec: compound( 0, dca, horizon, marketreturn, { year: crashyear, down: crashintensity }, verbose )
+ }
 
-//
-// To the DCA!
-//
+let norecroi = Math.floor( ( 100 * ( chunk.norec.result - averaged.norec.result ) ) / chunk.norec.result )
+let recroi = Math.floor( ( 100 * ( chunk.norec.result - averaged.norec.result ) ) / chunk.norec.result )
 
-// No recession
-let averaged = compound( 0, dca, horizon, marketreturn, { year: -1 } ,verbose )
-
-// Recession
-let averagedrecession = compound( 0, dca, horizon, marketreturn, { year: crashyear, down: crashintensity }, verbose )
-
-console.log( `Without a recession chunk investing is ${Math.floor( ((chunk.result-averaged.result)*100)/chunk.result )}% more profitable.` )
-console.log( `With a recession chunk investing is ${Math.floor( ((chunkrecession.result-averagedrecession.result)*100)/chunkrecession.result )}% more profitable.` )
+console.log( `Without a recession chunk investing is ${norecroi}% more profitable.` )
+console.log( `With a recession chunk investing is ${Math.floor(recroi}% more profitable.` )
