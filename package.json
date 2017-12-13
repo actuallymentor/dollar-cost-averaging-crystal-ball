@@ -1,0 +1,19 @@
+{
+  "name": "dollar-cost-averaging-crystal-ball",
+  "version": "1.0.0",
+  "description": "I'd like to project how much a recession in the next 5 years would affect investment returns.",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/actuallymentor/dollar-cost-averaging-crystal-ball.git"
+  },
+  "author": "Mentor",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/actuallymentor/dollar-cost-averaging-crystal-ball/issues"
+  },
+  "homepage": "https://github.com/actuallymentor/dollar-cost-averaging-crystal-ball#readme"
+}
