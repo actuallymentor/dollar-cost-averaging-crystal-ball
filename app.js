@@ -9,7 +9,7 @@ const verbose = false
 const crashintensity = 50
 
 
-console.log( `Crash intensity: ${crashintensity}%, market return ${marketreturn}%` )
+console.log( `Crash intensity: ${crashintensity}%, market return ${marketreturn}%\n` )
 
 for (let crashyear = 1; crashyear < horizon+1; crashyear++) {
 	let result = compare( marketreturn, horizon, crashyear, crashintensity, principal, verbose )
