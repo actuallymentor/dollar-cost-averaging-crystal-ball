@@ -15,5 +15,13 @@ console.log( '# Readme\nChunk investing means you invest everything right now.\n
 
 for (let crashyear = 1; crashyear < horizon+1; crashyear++) {
 	let result = compare( marketreturn, horizon, crashyear, crashintensity, principal, verbose )
-	console.log( `Recession year ${ crashyear < 10 ? ( "0" + String( crashyear ) ) : crashyear} | Chunk ROI vs DCA ${ result.chunkroirec < 0 ? String( result.chunkroirec ).red : String( result.chunkroirec ).green }%` )
+
+	// Colorize
+	let crashyearcolor = crashyear < 10 ? ( "0" + String( crashyear ) ) : crashyear
+	let chunkroicolor = result.chunkroirec < 0 ? String( result.chunkroirec ).red : String( result.chunkroirec ).green
+
+
+	console.log( `Recession year ${ crashyearcolor } | Chunk ROI vs DCA ${ chunkroicolor }% | Chunk: €${ result.portfolio.chunk } | DCA €${ result.portfolio.dca }` )
 }
+
+// compare( marketreturn, horizon, -1, crashintensity, principal, verbose )
