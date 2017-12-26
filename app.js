@@ -6,9 +6,12 @@ const horizon = 20
 const principal = 100000
 const dca = principal/horizon
 const verbose = false
+const crashintensity = 50
 
-compare( marketreturn, horizon, 1, 50, principal, verbose )
-compare( marketreturn, horizon, 5, 50, principal, verbose )
-compare( marketreturn, horizon, 10, 50, principal, verbose )
-compare( marketreturn, horizon, 15, 50, principal, verbose )
-compare( marketreturn, horizon, 20, 50, principal, verbose )
+
+console.log( `Crash intensity: ${crashintensity}%, market return ${marketreturn}%` )
+
+for (let crashyear = 1; crashyear < horizon+1; crashyear++) {
+	let result = compare( marketreturn, horizon, crashyear, crashintensity, principal, verbose )
+	console.log( `Recession year ${crashyear} | Chunk ${result.chunkroirec}%` )
+}

@@ -7,32 +7,34 @@ module.exports = ( marketreturn, horizon, crashyear, crashintensity, principal, 
 
 	// Chunk
 	let chunk = { 
+		// principal, yearlyadd, duration, interest, recession, debug
 		norec: compound( principal, 0, horizon, marketreturn, { year: -1 } , verbose ),
 		rec: compound( principal, 0, horizon, marketreturn, { year: crashyear, down: crashintensity } , verbose )
 	 }
 
 	// Dollar cost averaged
 	let averaged = { 
+		// principal, yearlyadd, duration, interest, recession, debug
 		norec: compound( 0, dca, horizon, marketreturn, { year: -1 } ,verbose ),
 		rec: compound( 0, dca, horizon, marketreturn, { year: crashyear, down: crashintensity }, verbose )
 	 }
 
+	// How much more profitable is chunk investing in *no* recession
 	let norecroi = Math.floor( ( 100 * ( chunk.norec.result - averaged.norec.result ) ) / chunk.norec.result )
+	// How much more profitable is chunk investing *with* recession
 	let recroi = Math.floor( ( 100 * ( chunk.rec.result - averaged.rec.result ) ) / chunk.rec.result )
 
-	console.log( '\n----------' )
-	console.log( `${crashintensity}% crash in year ${crashyear} of ${horizon}` )
-	console.log( `Recession: chunk investing is ${norecroi}% more profitable.` )
-	console.log( `No recess: chunk investing is ${recroi}% more profitable.` )
-	console.log( '-----------\n' )
+	if ( verbose ) { 
+		console.log( '\n----------' )
+		console.log( `${crashintensity}% crash in year ${crashyear} of ${horizon}` )
+		console.log( `Recession: chunk investing is ${recroi}% more profitable than DCA.` )
+		console.log( `No recess: chunk investing is ${norecroi}% more profitable than DCA.` )
+		console.log( '-----------\n' )
+	 }
+	
+	return { 
+		chunkroirec: recroi,
+		chunkroinorec: norecroi
+	 }
 
 }
-
-// Assumptions
-const marketreturn = 4
-const horizon = 20
-const crashyear = 5
-const crashintensity = 50
-const principal = 100000
-const dca = principal/horizon
-const verbose = true
