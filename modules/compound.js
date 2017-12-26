@@ -37,8 +37,14 @@ const compare = assumptions => {
 
 	return { 
 		chunkwins: 		chunkroi > dcaroi ? true : false,
-		chunkmargin: 	Math.floor( ( 100 * ( chunkroi - dcaroi ) ) / chunkroi ),
-		dcamargin: 		Math.floor( ( 100 * ( dcaroi - chunkroi ) ) / dcaroi )
+		margin: { 
+			chunk: 	Math.floor( ( 100 * ( chunkroi - dcaroi ) ) / chunkroi ),
+			dca: 		Math.floor( ( 100 * ( dcaroi - chunkroi ) ) / dcaroi )
+		},
+		roi: { 
+			chunk: Math.floor( chunkroi ),
+			dca: Math.floor( dcaroi )
+		}
 	}
 
 }
