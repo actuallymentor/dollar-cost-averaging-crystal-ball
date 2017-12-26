@@ -17,6 +17,6 @@
   },
   "homepage": "https://github.com/actuallymentor/dollar-cost-averaging-crystal-ball#readme",
   "dependencies": {
-    "colour": "^0.7.1"
+    "colors": "^1.1.2"
   }
 }
