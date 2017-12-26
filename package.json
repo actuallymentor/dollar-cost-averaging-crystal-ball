@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/actuallymentor/dollar-cost-averaging-crystal-ball/issues"
   },
-  "homepage": "https://github.com/actuallymentor/dollar-cost-averaging-crystal-ball#readme"
+  "homepage": "https://github.com/actuallymentor/dollar-cost-averaging-crystal-ball#readme",
+  "dependencies": {
+    "colour": "^0.7.1"
+  }
 }

@@ -1,4 +1,5 @@
 const compare = require( `${__dirname}/modules/compare` )
+const colour = require( 'colour' )
 
 // Assumptions
 const marketreturn = 4
@@ -13,5 +14,5 @@ console.log( `Crash intensity: ${crashintensity}%, market return ${marketreturn}
 
 for (let crashyear = 1; crashyear < horizon+1; crashyear++) {
 	let result = compare( marketreturn, horizon, crashyear, crashintensity, principal, verbose )
-	console.log( `Recession year ${crashyear} | Chunk ${result.chunkroirec}%` )
+	console.log( `Recession year ${crashyear} | Chunk ${ result.chunkroirec < 0 ? String( result.chunkroirec ).red : String( result.chunkroirec ).green }%` )
 }
