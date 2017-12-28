@@ -13,5 +13,5 @@ const assumptions = {
 
 assumptions.recession.size = 50
 report( assumptions )
-assumptions.recession.size = 80
+assumptions.horizon = 10
 report( assumptions )
