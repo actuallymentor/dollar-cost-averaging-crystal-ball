@@ -32,9 +32,10 @@ const chunk = assumptions => {
 }
 
 const compare = assumptions => { 
-	let chunkroi = chunk( assumptions )
-	let dcaroi   = dca( assumptions )
-	let ramproi  = ramptourist( assumptions )
+	let chunkroi  = chunk( assumptions )
+	let dcaroi    = dca( assumptions )
+	let ramproi   = ramptourist( assumptions )
+	let hybridroi = hybrid( assumptions )
 
 	return { 
 		chunkwins: 		chunkroi > dcaroi ? true : false,
@@ -45,7 +46,8 @@ const compare = assumptions => {
 		roi: { 
 			chunk: Math.floor( chunkroi ),
 			dca:   Math.floor( dcaroi ),
-			ramp:  Math.floor( ramproi )
+			ramp:  Math.floor( ramproi ),
+			hybrid: Math.floor( hybridroi )
 		}
 	}
 
@@ -80,9 +82,37 @@ const ramptourist = assumptions => {
 	return portfolio
 }
 
+const hybrid = assumptions => { 
+		// Decimalise and create portfolio holder
+	let principal 	= assumptions.principal
+	let portfolio 	= 0
+	let crash 		= 1 - ( assumptions.recession.size / 100 )
+	let grow 		= 1 + ( assumptions.roi / 100 )
+	let yearlyadd 	= assumptions.principal / assumptions.horizon
+
+	// Loop over the years and crash or grow
+	for (let thisyear = 1; thisyear < assumptions.horizon + 1 ; thisyear++) {
+		// If this is the first year invest 50%
+		if ( thisyear == 1 ) { 
+			portfolio += ( principal / 2 )
+			principal *= 0.5
+			// We go get a return over the first year
+			portfolio *= grow
+		 }
+		// If there is a crash invest it all
+		if ( thisyear == assumptions.recession.year ) { 
+			portfolio *= crash
+			portfolio += principal
+			principal = 0
+		// If no crash let it grow
+		} else { 
+		 	portfolio *= grow
+		}
+	}
+	// Resolve with the outcome
+	return portfolio
+}
+
 module.exports = { 
-	dca: dca,
-	chunk: chunk,
-	ramptourist: ramptourist,
 	compare: compare
 }

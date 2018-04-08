@@ -6,12 +6,12 @@ const norm = number => {
 	return number
 }
 
-const colorise = ( current, otherone, othertwo ) => { 
+const colorise = ( current, otherone, othertwo, otherthree ) => { 
 	// If if is the highest
-	if( current > otherone && current > othertwo ) { 
+	if( current > otherone && current > othertwo && current > otherthree ) { 
 		return String( current ).green
 	// If it is the lowest
-	} else if ( current < otherone && current < othertwo ) { 
+	} else if ( current < otherone && current < othertwo && current < otherthree ) { 
 		return String( current ).red
 	// If it is the middle
 	} else { 
@@ -21,25 +21,20 @@ const colorise = ( current, otherone, othertwo ) => {
 
 const report = assumptions => { 
 	console.log( `\n# Assumptions\nPrincipal €${ assumptions.principal }, horizon ${ assumptions.horizon } years, ROI ${ assumptions.roi }%, recession of ${assumptions.recession.size}%\n` )
-	console.log( `# Legend\nYear 00 | CNK | DCA | RAMP\n` )
+	console.log( `Recession year: year in which the crash happens.\nLSI/DCA/RAMP/HYBRID numbers are the final value of the portfolio\nLSI = Lump sum in year one\nDCA = dollar cost averaged on a yearly basis\nRAMP = DCA until a crash and then invest the remaining available money\nHYBRID = LSI 50% and invest the other 50% at the next crash\n| Recession year | LSI | DCA | RAMP | HYBRID |` )
+	console.log( `| ------- | --- | --- | ---- |` )
 	for (let recyear = 1; recyear < assumptions.horizon+1; recyear++) {
 		assumptions.recession.year = recyear
 		let result = compound.compare( assumptions )
 
 		// Normalisations for display purposes
 		let recessionyear = recyear < 10 ? ( "0" + String( recyear ) ) : recyear
-		// let dcacolor 	  = result.chunkwins ? String( norm( result.margin.dca ) + '%' ).red : String( norm( result.margin.dca ) + '%' ).green
-		// let chunkcolor	  = result.chunkwins ? String( norm( result.margin.chunk ) + '%' ).green : String( norm( result.margin.chunk ) + '%' ).red
-		// let winner 		  = result.chunkwins ? 'CNK'.yellow : 'DCA'.blue
-		// let winningroi 	  = result.chunkwins ? result.roi.chunk : result.roi.dca
-		
-		// console.log( `Year ${ recessionyear } | ${ dcacolor } vs ${ chunkcolor } | ${ winner } | ${ winningroi } | ${ result.roi.ramp }` )
-		let colorchunk = colorise( result.roi.chunk, result.roi.dca, result.roi.ramp )
-		let colordca   = colorise( result.roi.dca, result.roi.chunk, result.roi.ramp )
-		let colorramp  = colorise( result.roi.ramp, result.roi.dca, result.roi.chunk )
-		console.log( `Year ${ recessionyear } | ${ colorchunk } | ${ colordca } | ${ colorramp }` )
+		let colorchunk  = colorise( result.roi.chunk, result.roi.dca, result.roi.ramp, result.roi.hybrid )
+		let colordca    = colorise( result.roi.dca, result.roi.chunk, result.roi.ramp, result.roi.hybrid )
+		let colorramp   = colorise( result.roi.ramp, result.roi.dca, result.roi.chunk, result.roi.hybrid )
+		let colorhybrid = colorise( result.roi.hybrid, result.roi.ramp, result.roi.dca, result.roi.chunk )
+		console.log( `| Year ${ recessionyear } | ${ colorchunk } | ${ colordca } | ${ colorramp } | ${ colorhybrid } |` )
 	}
-	console.log( '\n' )
  }
 
 module.exports = report
