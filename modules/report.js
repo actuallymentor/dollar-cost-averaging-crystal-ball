@@ -21,7 +21,7 @@ const colorise = ( current, otherone, othertwo, otherthree ) => {
 
 const report = assumptions => { 
 	console.log( `\n# Assumptions\nPrincipal €${ assumptions.principal }, horizon ${ assumptions.horizon } years, ROI ${ assumptions.roi }%, recession of ${assumptions.recession.size}%\n` )
-	console.log( `Recession year: year in which the crash happens.\nLSI/DCA/RAMP/HYBRID numbers are the final value of the portfolio\nLSI = Lump sum in year one\nDCA = dollar cost averaged on a yearly basis\nRAMP = DCA until a crash and then invest the remaining available money\nHYBRID = LSI 50% and invest the other 50% at the next crash\n| Recession year | LSI | DCA | RAMP | HYBRID |` )
+	console.log( `Recession year: year in which the crash happens.\nLSI/DCA/RAMP/HYBRID numbers are the final value of the portfolio\nLSI = Lump sum in year one\nDCA = dollar cost averaged on a yearly basis\nRAMP = DCA until a crash and then invest the remaining available money\nHYBRID = LSI 50% and invest the other 50% at the next crash\n\n| Rc Year | LSI | DCA | RAMP | HYBRID |` )
 	console.log( `| ------- | --- | --- | ---- |` )
 	for (let recyear = 1; recyear < assumptions.horizon+1; recyear++) {
 		assumptions.recession.year = recyear
